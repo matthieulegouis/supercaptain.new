@@ -28,5 +28,5 @@ export default function Tracker({ children }) {
 
   if (!logged && !loading) return <SignIn />;
 
-  return <div>Loading</div>;
+  return null;
 }
