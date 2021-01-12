@@ -5,35 +5,34 @@ import { Select } from 'antd';
 import Section from '../form/Section';
 import updateProfile from '../../utils/functions/updateProfile';
 
-export default function Gender({ value }) {
+export default function Language({ value }) {
   const { t } = useTranslation('global');
   const { Option } = Select;
-  const [gender, setGender] = useState(value);
+  const [language, setLanguage] = useState(value);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    setGender(value);
+    setLanguage(value);
   }, [value]);
 
   const editContent = (
-    <Select value={gender} onChange={(v) => setGender(v)}>
-      <Option value="male">{t('male')}</Option>
-      <Option value="female">{t('female')}</Option>
-      <Option value="confidential">{t('confidential')}</Option>
+    <Select value={language} onChange={(v) => setLanguage(v)}>
+      <Option value="en">{t('en')}</Option>
+      <Option value="fr">{t('fr')}</Option>
     </Select>
   );
 
   const update = async () => {
-    await updateProfile({ gender }).then(() => {
+    await updateProfile({ language }).then(() => {
       setSaving(false);
     });
   };
 
   return (
     <Section
-      value={gender}
-      title="Gender"
-      titleIfEmpty="add_gender"
+      value={language}
+      title="Language"
+      titleIfEmpty="add_language"
       editContent={editContent}
       update={update}
       saving={saving}

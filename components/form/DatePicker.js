@@ -4,7 +4,7 @@ import { Form, Select } from 'antd';
 
 const getDaysInMonth = (month, year) => new Date(year, month, 0).getDate();
 
-const DatePicker = ({ date, selectDate, onlyMonth, onlyYear }) => {
+const DatePicker = ({ date, onChange, onlyMonth, onlyYear }) => {
   const { Option } = Select;
   const { t } = useTranslation('global');
   const [day, setDay] = useState(date.getDate());
@@ -22,7 +22,7 @@ const DatePicker = ({ date, selectDate, onlyMonth, onlyYear }) => {
   // Handle changes
   useEffect(() => {
     const newDate = new Date(year, month, day);
-    selectDate(newDate);
+    onChange(newDate);
   }, [day, month, year]);
 
   // Set number of days in a month

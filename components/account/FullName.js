@@ -31,7 +31,7 @@ export default function FullName({ value }) {
 
   return (
     <Section
-      value={value}
+      value={fullName}
       title="FullName"
       titleIfEmpty="add_fullName"
       editContent={editContent}

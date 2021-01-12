@@ -3,22 +3,22 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { auth } from '../../firestore';
 import SignIn from '../account/SignIn';
-import { loggedState, userNameState } from '../../lib/account';
+import { loggedState, usernameState } from '../../lib/account';
 
 export default function Tracker({ children }) {
   const [logged, setLogged] = useRecoilState(loggedState);
-  const setUserName = useSetRecoilState(userNameState);
+  const setUsername = useSetRecoilState(usernameState);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     auth.onAuthStateChanged((account) => {
       if (account) {
         setLogged(true);
-        setUserName(account.displayName);
+        setUsername(account.displayName);
         setLoading(false);
       } else {
         setLogged(false);
-        setUserName('');
+        setUsername('');
         setLoading(false);
       }
     });

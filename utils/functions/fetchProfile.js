@@ -12,6 +12,7 @@ export default function fetchProfile() {
             fullName: doc.data().fullName,
             gender: doc.data().gender,
             birthday: doc.data().birthday,
+            language: doc.data().language,
           };
           resolve(data);
         } else {

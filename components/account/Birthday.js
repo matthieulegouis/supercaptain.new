@@ -9,19 +9,19 @@ import months from '../../utils/data/months';
 export default function Birthday({ value }) {
   const { t } = useTranslation('global');
   const [birthday, setBirthday] = useState(value);
-  const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setBirthday(value);
   }, [value]);
 
   const editContent = (
-    <DatePicker date={birthday || new Date()} selectDate={(date) => setBirthday(date)} />
+    <DatePicker date={birthday || new Date()} onChange={(date) => setBirthday(date)} />
   );
 
   const update = async () => {
     await updateProfile({ birthday }).then(() => {
-      setSaving(false);
+      setSuccess(true);
     });
   };
 
@@ -32,8 +32,7 @@ export default function Birthday({ value }) {
       titleIfEmpty="add_birthday"
       editContent={editContent}
       update={update}
-      saving={saving}
-      setSaving={setSaving}
+      success={success}
     />
   );
 }

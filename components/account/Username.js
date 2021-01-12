@@ -1,39 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select } from 'antd';
+import { Input } from 'antd';
 
 import Section from '../form/Section';
 import updateProfile from '../../utils/functions/updateProfile';
 
-export default function Gender({ value }) {
+export default function Username({ value }) {
   const { t } = useTranslation('global');
-  const { Option } = Select;
-  const [gender, setGender] = useState(value);
+  const [username, setUsername] = useState(value);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    setGender(value);
+    setUsername(value);
   }, [value]);
 
   const editContent = (
-    <Select value={gender} onChange={(v) => setGender(v)}>
-      <Option value="male">{t('male')}</Option>
-      <Option value="female">{t('female')}</Option>
-      <Option value="confidential">{t('confidential')}</Option>
-    </Select>
+    <Input
+      type="text"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      placeholder={t('FullName')}
+    />
   );
 
   const update = async () => {
-    await updateProfile({ gender }).then(() => {
+    await updateProfile({ username }).then(() => {
       setSaving(false);
     });
   };
 
   return (
     <Section
-      value={gender}
-      title="Gender"
-      titleIfEmpty="add_gender"
+      value={username}
+      title="Username"
+      titleIfEmpty="add_username"
       editContent={editContent}
       update={update}
       saving={saving}

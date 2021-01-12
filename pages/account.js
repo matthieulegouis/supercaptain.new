@@ -7,11 +7,18 @@ import Main from '../components/layout/Main';
 import Gender from '../components/account/Gender';
 import FullName from '../components/account/FullName';
 import Birthday from '../components/account/Birthday';
+import Language from '../components/account/Language';
+import Username from '../components/account/Username';
+import Email from '../components/account/Email';
+import Password from '../components/account/Password';
 
 export default function Page() {
   const [gender, setGender] = useState();
   const [fullName, setFullName] = useState();
   const [birthday, setBirthday] = useState();
+  const [language, setLanguage] = useState();
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,22 +27,30 @@ export default function Page() {
         setGender(data.gender);
         setFullName(data.fullName);
         setBirthday(new Date(data.birthday.seconds * 1000));
+        setLanguage(data.language);
+        setUsername(data.username);
+        setEmail(data.email);
       })
       .then(() => setLoading(false));
   }, []);
 
   if (loading) {
-    return <div>Loading</div>;
+    return (
+      <Main title="Account">
+        <div>Loading</div>
+      </Main>
+    );
   }
 
   return (
-    <Main title="account">
+    <Main title="Account">
       <FullName value={fullName} />
       <Gender value={gender} />
       <Birthday value={birthday} />
-      <div>
-        <Button onClick={signOut}>Logout</Button>
-      </div>
+      <Language value={language} />
+      <Username value={username} />
+      <Email value={email} />
+      <Password />
     </Main>
   );
 }
