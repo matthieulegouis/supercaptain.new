@@ -1,4 +1,4 @@
-import { auth } from '../../firestore';
+import { auth } from '../../../firestore';
 
 export default function signOut() {
   return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import { db, auth } from '../../firestore';
+import { db, auth } from '../../../firestore';
 
 export default function fetchProfile() {
   return new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ export default function fetchProfile() {
       .onSnapshot((doc) => {
         if (doc.exists) {
           const data = {
-            username: doc.data().username,
+            email: doc.data().email,
             fullName: doc.data().fullName,
             gender: doc.data().gender,
             birthday: doc.data().birthday,

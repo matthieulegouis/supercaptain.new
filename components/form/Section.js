@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'antd';
+import { Form, Button } from 'antd';
+
+import ReAuth from '../account/ReAuth';
 
 export default function Section({
   value,
@@ -11,63 +13,98 @@ export default function Section({
   pending,
   setPending,
   success,
+  setSuccess,
   error,
+  setError,
   disabled,
   reset,
+  reAuthRequired,
 }) {
   const { t } = useTranslation('global');
   const [edit, setEdit] = useState(false);
+  const [showReAuth, setShowReAuth] = useState(false);
+  const [password, setPassword] = useState(false);
 
+  // Handle success state
   useEffect(() => {
-    if (success) setEdit(false);
+    setPending(false);
+    if (success) {
+      setError('');
+      setEdit(false);
+      setSuccess(false);
+    }
   }, [success]);
 
+  // Handle error state
+  useEffect(() => {
+    if (error) {
+      setPending(false);
+      setSuccess(false);
+    }
+  }, [error]);
+
+  // Edit
+  const handleEdit = () => {
+    if (reAuthRequired) setShowReAuth(true);
+    else setEdit(true);
+  };
+
+  // Save
   const save = () => {
-    update();
+    update(password);
+    setError('');
     setPending(true);
   };
 
+  // Cancel
   const cancel = () => {
     setEdit(false);
     reset();
   };
 
-  // Value
+  // If value
   if (!edit && value) {
     return (
       <div>
         <div className="font-medium">{t(title)}</div>
         <div className="flex justify-between">
           <div>{value}</div>
-          <Button onClick={() => setEdit(true)}>Edit</Button>
+          <Button onClick={handleEdit}>Edit</Button>
         </div>
+        {reAuthRequired && (
+          <ReAuth
+            visibility={showReAuth}
+            setVisibility={setShowReAuth}
+            setEdit={setEdit}
+            passPassword={setPassword}
+          />
+        )}
       </div>
     );
   }
 
-  // Edit
+  // Edit mode
   if (edit) {
     return (
       <div>
         <div className="font-medium">{t(title)}</div>
-        {error}
-        <div>{editContent}</div>
-        <div className="flex justify-end">
-          <div className="flex space-x-1">
-            <Button onClick={cancel}>Cancel</Button>
-            {pending ? (
-              <Button type="primary">...</Button>
-            ) : (
-                <Button type="primary" onClick={save} disabled={disabled}>
-                  {t('Save')}
-                </Button>
-              )}
+        <Form onFinish={save}>
+          {error}
+          <div>{editContent}</div>
+          <div className="flex justify-end">
+            <div className="flex space-x-1">
+              <Button onClick={cancel}>Cancel</Button>
+              <Button type="primary" htmlType="submit" disabled={disabled || pending}>
+                {pending ? '...' : t('Save')}
+              </Button>
+            </div>
           </div>
-        </div>
+        </Form>
       </div>
     );
   }
 
+  // If no value
   return (
     <div>
       <Button onClick={() => setEdit(true)}>{titleIfEmpty}</Button>

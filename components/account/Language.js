@@ -3,18 +3,22 @@ import { useTranslation } from 'react-i18next';
 import { Select } from 'antd';
 
 import Section from '../form/Section';
-import updateProfile from '../../utils/functions/updateProfile';
+import updateProfile from '../../utils/functions/account/updateProfile';
 
 export default function Language({ value }) {
   const { t } = useTranslation('global');
   const { Option } = Select;
   const [language, setLanguage] = useState(value);
-  const [saving, setSaving] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
+  // Init
   useEffect(() => {
     setLanguage(value);
   }, [value]);
 
+  // Edit content
   const editContent = (
     <Select value={language} onChange={(v) => setLanguage(v)}>
       <Option value="en">{t('en')}</Option>
@@ -22,10 +26,16 @@ export default function Language({ value }) {
     </Select>
   );
 
+  // Reset
+  const reset = () => {
+    setLanguage(value);
+  };
+
+  // Update
   const update = async () => {
-    await updateProfile({ language }).then(() => {
-      setSaving(false);
-    });
+    await updateProfile({ language })
+      .then(() => setSuccess(true))
+      .catch((err) => setError(err.code));
   };
 
   return (
@@ -35,8 +45,13 @@ export default function Language({ value }) {
       titleIfEmpty="add_language"
       editContent={editContent}
       update={update}
-      saving={saving}
-      setSaving={setSaving}
+      pending={pending}
+      setPending={setPending}
+      success={success}
+      setSuccess={setSuccess}
+      error={error}
+      setError={setError}
+      reset={reset}
     />
   );
 }

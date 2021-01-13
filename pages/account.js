@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button } from 'antd';
 
-import signOut from '../utils/functions/signOut';
-import fetchProfile from '../utils/functions/fetchProfile';
+import fetchProfile from '../utils/functions/account/fetchProfile';
 import Main from '../components/layout/Main';
 import Gender from '../components/account/Gender';
 import FullName from '../components/account/FullName';
@@ -17,8 +15,6 @@ export default function Page() {
   const [fullName, setFullName] = useState();
   const [birthday, setBirthday] = useState();
   const [language, setLanguage] = useState();
-  const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,8 +24,6 @@ export default function Page() {
         setFullName(data.fullName);
         setBirthday(new Date(data.birthday.seconds * 1000));
         setLanguage(data.language);
-        setUsername(data.username);
-        setEmail(data.email);
       })
       .then(() => setLoading(false));
   }, []);
@@ -48,8 +42,8 @@ export default function Page() {
       <Gender value={gender} />
       <Birthday value={birthday} />
       <Language value={language} />
-      <Username value={username} />
-      <Email value={email} />
+      <Username />
+      <Email />
       <Password />
     </Main>
   );

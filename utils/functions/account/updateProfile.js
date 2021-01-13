@@ -1,4 +1,4 @@
-import { db, firebase, auth } from '../../firestore';
+import { db, firebase, auth } from '../../../firestore';
 
 export default function updateProfile(payload) {
   return new Promise((resolve, reject) => {

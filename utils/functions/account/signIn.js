@@ -1,4 +1,4 @@
-import { firebase, auth } from '../../firestore';
+import { firebase, auth } from '../../../firestore';
 
 export default function signIn(email, password) {
   return new Promise((resolve, reject) => {

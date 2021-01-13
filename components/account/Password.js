@@ -4,55 +4,48 @@ import { Eye, EyeOff } from 'react-feather';
 import { Input } from 'antd';
 
 import Section from '../form/Section';
-import checkFormatPassword from '../../utils/functions/checkFormatPassword';
-import updatePassword from '../../utils/functions/updatePassword';
+import checkFormatPassword from '../../utils/functions/check/checkFormatPassword';
+import updatePassword from '../../utils/functions/account/updatePassword';
 
 export default function Password() {
   const { t } = useTranslation('global');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
-  const disabled = !checkFormatPassword(password) || password !== passwordCheck;
   const [pending, setPending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const disabled = !checkFormatPassword(password) || password !== passwordCheck;
 
+  // Edit content
   const editContent = (
     <>
       <Input.Password
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        type="password"
         placeholder={t('new_password')}
         iconRender={(visible) => (visible ? <Eye /> : <EyeOff />)}
       />
       <Input.Password
         value={passwordCheck}
         onChange={(e) => setPasswordCheck(e.target.value)}
-        type="password"
         placeholder={t('confirm_new_password')}
         iconRender={(visible) => (visible ? <Eye /> : <EyeOff />)}
       />
     </>
   );
 
-  const update = async () => {
-    setPending(true);
-    await updatePassword(password)
-      .then(() => {
-        setPending(false);
-        setSuccess(true);
-      })
-      .catch((err) => {
-        setPending(false);
-        setSuccess(false);
-        setError(err.code);
-      });
-  };
-
+  // Reset
   const reset = () => {
     setPassword('');
     setPasswordCheck('');
-    setError('');
+  };
+
+  // Update
+  const update = async () => {
+    setPending(true);
+    await updatePassword(password)
+      .then(() => setSuccess(true))
+      .catch((err) => setError(err.code));
   };
 
   return (
@@ -64,9 +57,11 @@ export default function Password() {
       pending={pending}
       setPending={setPending}
       success={success}
+      setSuccess={setSuccess}
       error={error}
-      disabled={disabled}
+      setError={setError}
       reset={reset}
+      disabled={disabled}
     />
   );
 }

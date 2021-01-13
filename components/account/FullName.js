@@ -3,17 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { Input } from 'antd';
 
 import Section from '../form/Section';
-import updateProfile from '../../utils/functions/updateProfile';
+import updateProfile from '../../utils/functions/account/updateProfile';
+import checkFormatFullName from '../../utils/functions/check/checkFormatFullName';
 
 export default function FullName({ value }) {
   const { t } = useTranslation('global');
   const [fullName, setFullName] = useState(value);
-  const [saving, setSaving] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const disabled = fullName === value || !checkFormatFullName(fullName);
 
+  // Init
   useEffect(() => {
     setFullName(value);
   }, [value]);
 
+  // Edit content
   const editContent = (
     <Input
       type="text"
@@ -23,10 +29,16 @@ export default function FullName({ value }) {
     />
   );
 
+  // Reset
+  const reset = () => {
+    setFullName(value);
+  };
+
+  // Update
   const update = async () => {
-    await updateProfile({ fullName }).then(() => {
-      setSaving(false);
-    });
+    await updateProfile({ fullName })
+      .then(() => setSuccess(true))
+      .catch((err) => setError(err.code));
   };
 
   return (
@@ -36,8 +48,14 @@ export default function FullName({ value }) {
       titleIfEmpty="add_fullName"
       editContent={editContent}
       update={update}
-      saving={saving}
-      setSaving={setSaving}
+      pending={pending}
+      setPending={setPending}
+      success={success}
+      setSuccess={setSuccess}
+      error={error}
+      setError={setError}
+      disabled={disabled}
+      reset={reset}
     />
   );
 }

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Menu, Button } from 'antd';
 
-import signOut from '../../utils/functions/signOut';
+import signOut from '../../utils/functions/account/signOut';
 
 export default function MenuAccount() {
   const { t } = useTranslation('global');

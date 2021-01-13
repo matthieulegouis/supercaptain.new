@@ -3,11 +3,12 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { auth } from '../../firestore';
 import SignIn from '../account/SignIn';
-import { loggedState, usernameState } from '../../lib/account';
+import { loggedState, usernameState, emailState } from '../../lib/account';
 
 export default function Tracker({ children }) {
   const [logged, setLogged] = useRecoilState(loggedState);
   const setUsername = useSetRecoilState(usernameState);
+  const setEmail = useSetRecoilState(emailState);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ export default function Tracker({ children }) {
       if (account) {
         setLogged(true);
         setUsername(account.displayName);
+        setEmail(account.email);
         setLoading(false);
       } else {
         setLogged(false);

@@ -3,18 +3,22 @@ import { useTranslation } from 'react-i18next';
 import { Select } from 'antd';
 
 import Section from '../form/Section';
-import updateProfile from '../../utils/functions/updateProfile';
+import updateProfile from '../../utils/functions/account/updateProfile';
 
 export default function Gender({ value }) {
   const { t } = useTranslation('global');
   const { Option } = Select;
   const [gender, setGender] = useState(value);
-  const [saving, setSaving] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
+  // Init
   useEffect(() => {
     setGender(value);
   }, [value]);
 
+  // Edit content
   const editContent = (
     <Select value={gender} onChange={(v) => setGender(v)}>
       <Option value="male">{t('male')}</Option>
@@ -23,10 +27,16 @@ export default function Gender({ value }) {
     </Select>
   );
 
+  // Reset
+  const reset = () => {
+    setGender(value);
+  };
+
+  // Update
   const update = async () => {
-    await updateProfile({ gender }).then(() => {
-      setSaving(false);
-    });
+    await updateProfile({ gender })
+      .then(() => setSuccess(true))
+      .catch((err) => setError(err.code));
   };
 
   return (
@@ -36,8 +46,13 @@ export default function Gender({ value }) {
       titleIfEmpty="add_gender"
       editContent={editContent}
       update={update}
-      saving={saving}
-      setSaving={setSaving}
+      pending={pending}
+      setPending={setPending}
+      success={success}
+      setSuccess={setSuccess}
+      error={error}
+      setError={setError}
+      reset={reset}
     />
   );
 }
