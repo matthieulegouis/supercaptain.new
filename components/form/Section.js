@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Button } from 'antd';
+import dynamic from 'next/dynamic';
 
-import ReAuth from '../account/ReAuth';
+// Load ReAuth when needed
+const ReAuth = dynamic(() => import('../account/ReAuth'));
 
 export default function Section({
   value,
@@ -23,7 +25,7 @@ export default function Section({
   const { t } = useTranslation('global');
   const [edit, setEdit] = useState(false);
   const [showReAuth, setShowReAuth] = useState(false);
-  const [password, setPassword] = useState(false);
+  const [password, setPassword] = useState('');
 
   // Handle success state
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function Section({
         <div className="font-medium">{t(title)}</div>
         <div className="flex justify-between">
           <div>{value}</div>
-          <Button onClick={handleEdit}>Edit</Button>
+          <Button onClick={handleEdit}>{t('Edit')}</Button>
         </div>
         {reAuthRequired && (
           <ReAuth

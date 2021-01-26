@@ -1,4 +1,4 @@
-import calculateAge from '../utils/calculateAge';
+import calculateAge from './calculateAge';
 import MINIMUM_AGE from '../../consts/minimumAge';
 
 export default function checkBirthday(date) {

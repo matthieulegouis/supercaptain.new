@@ -1,34 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Init the project
 
-## Getting Started
+1. Create a Firestore project on firebase.
+2. Get the firebaseConfig on the firebase console.
+3. Create a new file called `.env.local`.
+4. Copy the firebaseConfig into this new file:
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+```
+NEXT_PUBLIC_FIREBASE_API_KEY="...complete with the firebaseConfig..."
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="...complete with the firebaseConfig..."
+NEXT_PUBLIC_FIREBASE_DATABASE_URL="...complete with the firebaseConfig..."
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="...complete with the firebaseConfig..."
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="...complete with the firebaseConfig..."
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="...complete with the firebaseConfig..."
+NEXT_PUBLIC_FIREBASE_APP_ID="...complete with the firebaseConfig..."
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Create a project on vercel.com.
+6. Add the firebaseConfig into the "Environment Variables" on vercel.com (settings/environment-variables).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Configure nodemailer
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Follow the steps from this blog: https://medium.com/@alexb72/how-to-send-emails-using-a-nodemailer-gmail-and-oauth2-fe19d66451f9
+2. Copy the keys into the file `/functions/index.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Init firebase cloud functions
 
-## Learn More
+1. Go to: `cd /project/functions`.
+2. Log in into your firebase project: `firebase login`.
+3. Deploy the functions: `firebase deploy --only functions`.
 
-To learn more about Next.js, take a look at the following resources:
+## Set rules in Firebase
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Go to "Cloud Firestore" then "Rules":
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Emails collection
+    match /emails/{email} {
+      allow read: if true;
+      allow write: if false;
+    }
+    // Skills collection
+    match /skills/{item} {
+    	allow read: if true;
+      allow write: if true;
+  	}
+    // Usernames collection
+    match /usernames/{username} {
+      allow read: if true;
+      allow write: if false;
+    }
+    // Codes collection
+    match /codes/{mail} {
+      allow read, write: if false;
+    }
+    // Users collection
+    match /users/{uid} {
+      allow read: if true;
+      allow write: if request.auth.uid == uid;
+      match /timeline/{item} {
+        allow read: if true;
+        allow write: if request.auth.uid == uid;
+    	}
+      match /skills/{item} {
+        allow read: if true;
+        allow write: if request.auth.uid == uid;
+    	}
+    }
+  }
+}
+```
 
-## Deploy on Vercel
+2. Go to "Storage" then "Rules":
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write;
+    }
+  }
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Launch the project
+
+`npm install`
+`npm run dev` for development mode
+`npm run build` for production mode
+s

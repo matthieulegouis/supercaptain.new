@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Select } from 'antd';
 
 import Section from '../form/Section';
-import updateProfile from '../../utils/functions/account/updateProfile';
+import updateProfile from '../../utils/functions/action/updateProfile';
 
 export default function Gender({ value }) {
   const { t } = useTranslation('global');

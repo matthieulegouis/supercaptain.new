@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce';
 import { useRecoilValue } from 'recoil';
 
 import Section from '../form/Section';
-import updateUsername from '../../utils/functions/account/updateUsername';
+import updateUsername from '../../utils/functions/action/updateUsername';
 import checkFormatUsername from '../../utils/functions/check/checkFormatUsername';
 import checkAvailabilityUsername from '../../utils/functions/check/checkAvailabilityUsername';
 import { usernameState } from '../../lib/account';
@@ -26,6 +26,7 @@ export default function Username() {
   const disabledCheck = !checkFormatUsername(debouncedUsername) || debouncedUsername === value;
   const disabled = disabledCheck || waitForDebounce || !usernameAvailable;
 
+  // Init
   useEffect(() => {
     setUsername(value);
   }, [value]);
@@ -36,7 +37,7 @@ export default function Username() {
       type="text"
       value={username}
       onChange={(e) => setUsername(e.target.value)}
-      placeholder={t('FullName')}
+      placeholder={t('Username')}
     />
   );
 

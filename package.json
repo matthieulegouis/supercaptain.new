@@ -19,6 +19,7 @@
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-easy-crop": "^3.3.1",
     "react-feather": "^2.0.8",
     "react-i18next": "^11.8.5",
     "react-verification-code-input": "^1.2.9",

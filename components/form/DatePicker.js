@@ -4,7 +4,7 @@ import { Form, Select } from 'antd';
 
 const getDaysInMonth = (month, year) => new Date(year, month, 0).getDate();
 
-const DatePicker = ({ date, onChange, onlyMonth, onlyYear }) => {
+export default function DatePicker({ date, onChange, onlyMonth, onlyYear }) {
   const { Option } = Select;
   const { t } = useTranslation('global');
   const [day, setDay] = useState(date.getDate());
@@ -95,6 +95,4 @@ const DatePicker = ({ date, onChange, onlyMonth, onlyYear }) => {
       </div>
     </div>
   );
-};
-
-export default DatePicker;
+}

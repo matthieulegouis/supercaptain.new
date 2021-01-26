@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff } from 'react-feather';
 
-import signIn from '../../utils/functions/account/signIn';
+import signIn from '../../utils/functions/agent/signIn';
 import Main from '../layout/Main';
 
 export default function SignIn() {
@@ -32,7 +32,7 @@ export default function SignIn() {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            OK
+            {t('ok')}
           </Button>
         </Form.Item>
       </Form>
