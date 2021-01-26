@@ -6,9 +6,9 @@ import { useRecoilValue } from 'recoil';
 
 import Section from '../form/Section';
 import CheckEmailCode from './CheckEmailCode';
-import updateEmail from '../../utils/functions/action/updateEmail';
-import checkFormatEmail from '../../utils/functions/check/checkFormatEmail';
-import checkAvailabilityEmail from '../../utils/functions/check/checkAvailabilityEmail';
+import updateEmail from '../../utils/functions/agent/updateEmail';
+import checkFormatEmail from '../../utils/functions/utils/checkFormatEmail';
+import checkAvailabilityEmail from '../../utils/functions/utils/checkAvailabilityEmail';
 import { emailState } from '../../lib/account';
 
 export default function Email() {

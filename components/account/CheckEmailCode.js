@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { X } from 'react-feather';
 import ReactCodeInput from 'react-verification-code-input';
 
-import sendEmailCode from '../../utils/functions/action/sendEmailCode';
-import checkEmailCode from '../../utils/functions/check/checkEmailCode';
+import sendEmailCode from '../../utils/functions/agent/sendEmailCode';
+import checkEmailCode from '../../utils/functions/utils/checkEmailCode';
 import LIMIT_SEND_CODE from '../../utils/consts/limitSendCode';
 import LIMIT_CODE_CHECKS from '../../utils/consts/limitCodeChecks';
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import fetchAccount from '../../utils/functions/fetch/fetchAccount';
+import fetchAccount from '../../utils/functions/agent/fetchAccount';
 import Gender from './Gender';
 import FullName from './FullName';
 import Birthday from './Birthday';

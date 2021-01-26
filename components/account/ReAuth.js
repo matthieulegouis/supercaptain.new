@@ -3,7 +3,7 @@ import { X } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import { Modal, Form, Input, Button } from 'antd';
 
-import reAuth from '../../utils/functions/action/reAuth';
+import reAuth from '../../utils/functions/agent/reAuth';
 
 const ReAuth = ({ visibility, setVisibility, setEdit, passPassword }) => {
   const { t } = useTranslation('global');

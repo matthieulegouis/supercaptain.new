@@ -5,9 +5,9 @@ import { useDebounce } from 'use-debounce';
 import { useRecoilValue } from 'recoil';
 
 import Section from '../form/Section';
-import updateUsername from '../../utils/functions/action/updateUsername';
-import checkFormatUsername from '../../utils/functions/check/checkFormatUsername';
-import checkAvailabilityUsername from '../../utils/functions/check/checkAvailabilityUsername';
+import updateUsername from '../../utils/functions/agent/updateUsername';
+import checkFormatUsername from '../../utils/functions/utils/checkFormatUsername';
+import checkAvailabilityUsername from '../../utils/functions/utils/checkAvailabilityUsername';
 import { usernameState } from '../../lib/account';
 
 export default function Username() {

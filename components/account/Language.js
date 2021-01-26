@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Select } from 'antd';
 
 import Section from '../form/Section';
-import updateProfile from '../../utils/functions/action/updateProfile';
+import updateProfile from '../../utils/functions/agent/updateProfile';
 
 export default function Language({ value }) {
   const { t } = useTranslation('global');

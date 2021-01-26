@@ -4,8 +4,8 @@ import { Eye, EyeOff } from 'react-feather';
 import { Input } from 'antd';
 
 import Section from '../form/Section';
-import checkFormatPassword from '../../utils/functions/check/checkFormatPassword';
-import updatePassword from '../../utils/functions/action/updatePassword';
+import checkFormatPassword from '../../utils/functions/utils/checkFormatPassword';
+import updatePassword from '../../utils/functions/agent/updatePassword';
 
 export default function Password() {
   const { t } = useTranslation('global');

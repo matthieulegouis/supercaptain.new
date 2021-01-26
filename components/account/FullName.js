@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Input } from 'antd';
 
 import Section from '../form/Section';
-import updateProfile from '../../utils/functions/action/updateProfile';
-import checkFormatFullName from '../../utils/functions/check/checkFormatFullName';
+import updateProfile from '../../utils/functions/agent/updateProfile';
+import checkFormatFullName from '../../utils/functions/utils/checkFormatFullName';
 
 export default function FullName({ value }) {
   const { t } = useTranslation('global');

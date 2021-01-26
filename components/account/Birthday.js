@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import Section from '../form/Section';
 import DatePicker from '../form/DatePicker';
-import updateProfile from '../../utils/functions/action/updateProfile';
+import updateProfile from '../../utils/functions/agent/updateProfile';
+import checkBirthday from '../../utils/functions/utils/checkBirthday';
 import months from '../../utils/data/months';
-import checkBirthday from '../../utils/functions/check/checkBirthday';
 
 export default function Birthday({ value }) {
   const { t } = useTranslation('global');
